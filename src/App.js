@@ -88,7 +88,7 @@ function App() {
   };
 
   const isMusicalNote = (frequency) => {
-    const musicalNotes = [261.63, 293.66, 329.63, 349.23, 392.00, 432.00, 493.88];
+    const musicalNotes = [261.63,277.18, 293.66,311.13 , 329.63, 349.23, 369.99 ,392.00,415.30, 432.00, 466.16, 493.88,523.25,554.37,587.33,622.25,659.25,698.46 ,739.99, 783.99, 830.61, 880.00, 932.33 ,987.77];
     for (let note of musicalNotes) {
       if (Math.abs(frequency - note) < 10) {
         return true;
