@@ -33,7 +33,7 @@ function App() {
         let height = 40;
         if (i > 0) {
           const interval = spacePressIntervals[i - 1];
-          height = interval * 100;
+          height = interval;
           newScore += calculateScore(spacePressIntervals, spacePressTimestamps);
         }
         ctx.fillStyle = 'blue';
@@ -52,7 +52,7 @@ function App() {
   }, [spacePressTimestamps, spacePressIntervals]);
 
   const playSound = (interval) => {
-    const frequency = 440 + Math.floor(interval * 100);
+    const frequency = 432 + Math.floor(interval * 100);
     const duration = 0.2;
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const oscillator = audioContext.createOscillator();
@@ -72,14 +72,14 @@ function App() {
   const calculateScore = (intervals, times) => {
     let score = 0;
     if (intervals.length > 1) {
-      score += 10 * (1 - Math.abs(intervals[intervals.length - 1] - intervals[intervals.length - 2]) /
+      score += (1 - Math.abs(intervals[intervals.length - 1] - intervals[intervals.length - 2]) /
         Math.max(intervals[intervals.length - 1], intervals[intervals.length - 2]));
     }
-    score += 5 * intervals.length;
-    score += 2 * intervals.reduce((sum, interval) => sum + interval, 0);
+    score += intervals.length;
+    score += intervals.reduce((sum, interval) => sum + interval, 0);
     for (let i = 1; i < times.length; i++) {
       const interval = times[i] - times[i - 1];
-      const frequency = 440 + Math.floor(interval * 100);
+      const frequency = 432 + Math.floor(interval * 100);
       if (isMusicalNote(frequency)) {
         score += 20;
       }
@@ -88,7 +88,7 @@ function App() {
   };
 
   const isMusicalNote = (frequency) => {
-    const musicalNotes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88];
+    const musicalNotes = [261.63, 293.66, 329.63, 349.23, 392.00, 432.00, 493.88];
     for (let note of musicalNotes) {
       if (Math.abs(frequency - note) < 10) {
         return true;
